@@ -1,0 +1,19 @@
+{
+  "name": "microbonds-user-registry",
+  "version": "1.0.0",
+  "license": "(MIT AND Apache-2.0)",
+  "scripts": {
+    "deploy": "cd contract && ./deploy.sh",
+    "build": "npm run build:contract",
+    "build:contract": "cd contract && ./build.sh",
+
+    "test": "npm run test:unit && npm run test:integration:ts",
+    "test:unit": "npm run build && cd contract && cargo test",
+    "test:integration:ts": "npm run build && cd integration-tests/ts && npm test -- -- \"../../contract/target/wasm32-unknown-unknown/release/user_registry.wasm\"",
+    
+    "testnet:integration:ts": "cd integration-tests/ts && npm run testnet -- -- \"../../contract/target/wasm32-unknown-unknown/release/user_registry.wasm\"",
+    
+    "postinstall": "echo no frontend && echo rs tests && echo rs contract"
+  },
+  "dependencies": {}
+}

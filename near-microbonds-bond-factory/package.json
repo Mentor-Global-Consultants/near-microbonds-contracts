@@ -1,0 +1,23 @@
+{
+  "name": "microbonds-factory",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "cd nft-contract && bash build.sh && cd .. && ls && cd factory-contract && bash build.sh && cd ..",
+    "build:nft-contract": "cd nft-contract && ./build.sh",
+    "build:factory-contract": "cd factory-contract && ./build.sh",
+    "build:tests": "cd integration-tests/rs && cargo build",
+
+    "deploy": "cd nft-contract && ./deploy.sh && cd ../factory-contract && ./deploy.sh",
+    "deploy:nft-contract": "cd nft-contract && ./deploy.sh",
+    "deploy:factory-contract": "cd factory-contract && ./deploy.sh",
+
+    "test": "npm run:test:unit && npm run:test:integration",
+    "test:unit": "npm run test:unit:nft-contract && npm run test:unit:factory-contract",
+    "test:unit:nft-contract": "npm run build && cd nft-contract && cargo test -- --nocapture --color=always && cd ..",
+    "test:unit:factory-contract": "npm run build && cd factory-contract && cargo test -- --nocapture --color=always && cd ..",
+
+    "test:integration": "npm run test:integration:ts",
+    "test:integration:ts": "npm run build && cd integration-tests-ts && npm test -- -- \"../factory-contract/target/wasm32-unknown-unknown/release/bond_factory.wasm\""
+  }
+}
